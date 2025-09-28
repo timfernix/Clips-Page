@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>League Clips Showcase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body class="theme-dark">
+    <header class="site-header">
+      <div class="brand">
+        <span aria-hidden="true" class="brand__icon">✨</span>
+        <div>
+          <h1>Clips</h1>
+          <p>Clips here and clips there idk</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn" id="add-clip-btn" type="button">
+          <span aria-hidden="true">＋</span>
+          Add new clip
+        </button>
+        <button
+          class="btn btn-ghost"
+          type="button"
+          id="theme-toggle"
+          aria-label="Toggle color theme"
+        >
+          <span class="theme-toggle__icon" aria-hidden="true">🌙</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="filters" aria-label="Clip filters">
+        <form id="filters-form">
+          <div class="field-group">
+            <label for="search">Search</label>
+            <div class="input-with-icon">
+              <input
+                id="search"
+                name="search"
+                type="search"
+                placeholder="Search champions, titles, notes..."
+                autocomplete="off"
+              />
+              <span aria-hidden="true">🔍</span>
+            </div>
+          </div>
+
+          <div class="filters__grid">
+            <label class="select-group">
+              <span>Champion</span>
+              <select id="champion-filter" name="champion">
+                <option value="all">All Champions</option>
+              </select>
+            </label>
+
+            <label class="select-group">
+              <span>Role / Lane</span>
+              <select id="role-filter" name="role">
+                <option value="all">All Roles</option>
+              </select>
+            </label>
+
+            <label class="select-group">
+              <span>Category</span>
+              <select id="category-filter" name="category">
+                <option value="all">All Categories</option>
+              </select>
+            </label>
+
+            <label class="select-group">
+              <span>Sort</span>
+              <select id="sort-filter" name="sort">
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="champion">Champion A → Z</option>
+              </select>
+            </label>
+          </div>
+
+          <details class="filter-advanced">
+            <summary>Advanced filters</summary>
+            <fieldset class="tags-fieldset">
+              <legend>Tags</legend>
+              <div id="tag-filter" class="tag-options"></div>
+            </fieldset>
+            <div class="toggles">
+              <label class="toggle">
+                <input type="checkbox" id="favorites-toggle" name="favorite" />
+                <span class="toggle__indicator" aria-hidden="true"></span>
+                <span>Show favorites only</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="mute-toggle" name="muted" />
+                <span class="toggle__indicator" aria-hidden="true"></span>
+                <span>Start clips muted</span>
+              </label>
+            </div>
+          </details>
+
+          <div class="filters__footer">
+            <button class="btn btn-secondary" type="reset">Reset filters</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="clips" aria-live="polite">
+        <header class="clips__header">
+          <h2>Featured clips</h2>
+          <p id="clips-count" class="clips__count">0 clips</p>
+        </header>
+        <div id="clips-grid" class="clips__grid"></div>
+        <p id="empty-state" class="empty-state" hidden>
+          No clips match your filters yet. Try adjusting the filters or add new
+          plays!
+        </p>
+      </section>
+    </main>
+
+    <dialog id="add-clip-dialog" class="add-clip-dialog">
+      <form method="dialog">
+        <h3>Add a new clip</h3>
+        <p>
+          Use your capture workflow or admin tools to upload the video file and
+          insert its metadata into the database. Here's a sample SQL insert you
+          can adapt:
+        </p>
+        <pre><code>INSERT INTO lol_clips
+  (uuid, title, champion, role, category, tags, video_url, thumbnail_url,
+   description, favorite, recorded_at)
+VALUES
+  (UUID(), 'Elder steal into Pentakill', 'Samira', 'Bottom', 'Pentakill',
+   JSON_ARRAY('Finisher', 'Teamfight'),
+   'https://your.cdn/samira-elder-steal.mp4', 'https://your.cdn/samira-thumb.jpg',
+   'Chained ultimate after Elder steal to wipe the fight.', 1, '2024-02-21 20:17:00');</code></pre>
+        <p>
+          After saving, refresh this page or trigger your API sync to see the
+          new highlight appear.
+        </p>
+        <menu>
+          <button class="btn" value="cancel">Close</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <button id="scroll-top" class="scroll-top" type="button" aria-label="Scroll back to top">
+      ↑
+    </button>
+
+    <footer class="site-footer">
+      <p>
+        Built with ❤️ by timfernix. Using HTML, CSS, JavaScript, Express and MySQL.
+      </p>
+    </footer>
+  </body>
+</html>
